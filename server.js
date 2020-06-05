@@ -11,7 +11,6 @@ const path = require('path')
 app.use(cors())
 
 let MONGODB_URI = "mongodb+srv://dewangsolanki3:Cluster@123@cluster0-n0bdv.mongodb.net/testing?retryWrites=true&w=majority"
-
 // Mongoose connection
 mongoose.connect( MONGODB_URI || 'mongodb://localhost:27017/react-backend-template', { useNewUrlParser: true , useUnifiedTopology: true } , error => {
     error ? console.log("=======Oops Dewang=======" , error) : console.log("======Dewang MongoDB Successful======")  
