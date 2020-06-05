@@ -70,8 +70,8 @@ app.get('/delete/:id' , (req,res) => {
 // })
 
 
-if(process.env.NODE_ENV === 'production'){
-    app.use(express.static('client/build'))
+if (process.env.NODE_ENV === 'production') {
+	app.use(express.static('client/build'));
 
 
 //     app.use(express.static("client/build"));
@@ -82,6 +82,10 @@ if(process.env.NODE_ENV === 'production'){
 //  });
 
 }
+
+app.get('*', (request, response) => {
+	response.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+});
 
 
 
