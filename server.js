@@ -12,7 +12,7 @@ app.use(cors())
 
 
 // Mongoose connection
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/react-backend-template', { useNewUrlParser: true , useUnifiedTopology: true } , error => {
+mongoose.connect( MONGODB_URI || 'mongodb://localhost:27017/react-backend-template', { useNewUrlParser: true , useUnifiedTopology: true } , error => {
     error ? console.log("=======Oops Dewang=======" , error) : console.log("======Dewang MongoDB Successful======")  
 })
 
