@@ -5,7 +5,7 @@ const mongoose = require("mongoose")
 const cors = require("cors")
 let PORT = process.env.PORT || 8000
 const Bio = require("./model/Bio")
-
+const path = require('path')
 
 // Helps passing Data between Backend & Frontend as they run of different servers.
 app.use(cors())
@@ -74,18 +74,13 @@ if (process.env.NODE_ENV === 'production') {
 	app.use(express.static('client/build'));
 
 
-//     app.use(express.static("client/build"));
-
-
-// app.get("*", (req, res) => {
-//      res.sendFile(path.resolve(__dirname,  "build", "index.html"));
-//  });
+    app.get('/', (request, response) => {
+        response.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+    });
 
 }
 
-app.get('*', (request, response) => {
-	response.sendFile(path.join(__dirname, 'client/build', 'index.html'));
-});
+
 
 
 
