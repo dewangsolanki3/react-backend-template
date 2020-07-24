@@ -7,6 +7,7 @@ let PORT = process.env.PORT || 8000
 const Bio = require("./model/Bio")
 const path = require('path')
 
+
 // Helps passing Data between Backend & Frontend as they run of different servers.
 app.use(cors())
 
@@ -21,6 +22,39 @@ mongoose.connect( MONGODB_URI || 'mongodb://localhost:27017/react-backend-templa
 // Data Parsing ka code
 app.use(express.json())
 app.use(express.urlencoded({extended: false}))
+
+
+
+
+
+
+
+
+
+// Increment a Counter
+let counter = 0
+app.post("/add/:num", (req,res) => {
+    console.log("Counter got Hit!")
+    counter = counter + 1
+    console.log(counter)
+  })
+
+
+
+// query and params always a GET Method !!!
+app.get('/query/:num' , (req,res) => {
+    let query = req.query
+    console.log(query)
+
+    let num = req.params.num
+    console.log(num)
+    console.log(req.params)
+
+    console.log("hey!!!!!!!!!!!!!!!!!!")
+    res.send(num)
+
+})
+
 
 
 
@@ -62,12 +96,29 @@ app.get('/delete/:id' , (req,res) => {
 })
 
 
+// Update to MongoDb
+app.put("/edit/:id", async (req, res) => {
+    // console.log("put req to " , req.params.id)
+    const productId = req.params.id
+    const productToUpdate = await Bio.findById(productId)
+    console.log(productToUpdate)
+
+    if(productToUpdate){
+        productToUpdate.username = req.body.username;
+        productToUpdate.useremail = req.body.useremail;
+        productToUpdate.usermsg = req.body.usermsg;
+    }
+     await productToUpdate.save()
+     return res.status(200).send("Updated Successfully")
+    
+})
 
 
 
-// app.get('/' , (req,res) => {
-//     res.send("hello")
-// })
+
+
+
+
 
 
 if (process.env.NODE_ENV === 'production') {
@@ -79,7 +130,6 @@ if (process.env.NODE_ENV === 'production') {
     });
 
 }
-
 
 
 
