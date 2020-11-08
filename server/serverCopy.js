@@ -1,85 +1,6 @@
-const express = require('express')
-const mongoose = require('mongoose')
-const app = express()
-const Guest = require('./model/guestSchema.js')
-const cors = require("cors")
- 
-
-// === Mongoose DataBase Connection === 
-mongoose.connect('mongodb+srv://dewangsolanki3:Cluster@123@cluster0.n0bdv.mongodb.net/workshop-test?retryWrites=true&w=majority', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true 
-  },
-  error => { error ? console.log("=== Oops MongoDB failed ===") : console.log("=== MongoDB Dewang success ===")}
-)
-
-
-// === Body parser ka code ===
-app.use(express.json())
-app.use(express.urlencoded({extended: false}))
-
-
-// Helps passing Data between Backend & Frontend as they run of different servers.
-app.use(cors())
-
-
-
-// === Routes === 
-app.post('/save', (req,res) => {
-  const data = req.body
-  console.log(data)
-  const newGuest = new Guest(data)
-  newGuest.save( error => { error ? res.send("=== Oops ===" + error) : res.send("Yay Data Saved Successfully!")})
-})
-
-
-
-app.get('/', (req, res) => {
-  Guest.find({ })
-    .then( data => res.send(data))
-    .catch( error => res.send(error))
-})
-
-
-app.listen(5000, () => console.log("App running on Port " + 5000) )
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // ==========================================================================
-// ^^^^^^^^^ WORKSHOP Codes above^^^^^
+// ^^^^^^^^^ Add-on Codes for Delete and Update apart from Workshop ^^^^^
 // ==========================================================================
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -96,7 +17,7 @@ const path = require('path')
 // Helps passing Data between Backend & Frontend as they run of different servers.
 app.use(cors())
 
-let MONGODB_URI = "mongodb+srv://dewangsolanki3:Cluster@123@cluster0-n0bdv.mongodb.net/testing?retryWrites=true&w=majority"
+let MONGODB_URI = "mongodb+srv://dewangsolanki3:<Your Password>@cluster0-n0bdv.mongodb.net/<Your DB name>?retryWrites=true&w=majority"
 // Mongoose connection
 mongoose.connect( MONGODB_URI || 'mongodb://localhost:27017/react-backend-template', { 
     useNewUrlParser: true , 
@@ -207,8 +128,7 @@ app.put("/edit/:id", async (req, res) => {
 
 
 
-
-
+// For Hosting on Production - Heroku
 if (process.env.NODE_ENV === 'production') {
 	app.use(express.static('client/build'));
 
